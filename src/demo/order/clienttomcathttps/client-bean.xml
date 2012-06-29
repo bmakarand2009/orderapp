@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xmlns:sec="http://cxf.apache.org/configuration/security"  
+  xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"  
+  xmlns:jaxws="http://cxf.apache.org/jaxws"  
+  xsi:schemaLocation="   
+           http://cxf.apache.org/configuration/security   
+           http://cxf.apache.org/schemas/configuration/security.xsd   
+           http://cxf.apache.org/transports/http/configuration   
+           http://cxf.apache.org/schemas/configuration/http-conf.xsd   
+		   http://cxf.apache.org/jaxws 
+		   http://cxf.apache.org/schemas/jaxws.xsd
+           http://www.springframework.org/schema/beans   
+           http://www.springframework.org/schema/beans/spring-beans.xsd">  
+  
+ 	<jaxws:client id="orderClient" serviceClass="demo.order.OrderProcess" address="https://localhost:8443/orderappssl/OrderProcess" /> 
+   <!--  <jaxws:client id="orderClient" serviceClass="demo.order.OrderProcess" address="https://localhost:9001/OrderProcessSSL" /> -->
+	
+	<http-conf:conduit name="*.http-conduit">  
+		<http-conf:tlsClientParameters secureSocketProtocol="SSL">  
+		  <sec:trustManagers>  
+			  <sec:keyStore type="JKS" password="changeit" file="/temp/orderprocess.jks" />  
+		  </sec:trustManagers>  
+			<!--
+		  <sec:keyManagers keyPassword="changeit">  
+			   <sec:keyStore type="JKS" password="changeit" file="C:\tmp\orderprocess.jks" />  
+		  </sec:keyManagers>  
+		  -->
+		</http-conf:tlsClientParameters>  
+	</http-conf:conduit>  
+</beans>  
+<!--
+	<http-conf:conduit name="{http://order.demo}OrderProcessSSLPort.http-conduit">  
+-->	
+<!-- 
+	<http-conf:conduit name="{http://order.demo}OrderProcessSSLPort.http-conduit">  
+		<http-conf:tlsClientParameters disableCNCheck="true">  
+		  <sec:trustManagers>  
+			  <sec:keyStore type="JKS" password="changeit" file="C:\tmp\orderprocess.jks" />  
+		  </sec:trustManagers>  
+		  <sec:keyManagers keyPassword="password">  
+			   <sec:keyStore type="JKS" password="changeit" file="C:\tmp\orderprocess.jks" />  
+		  </sec:keyManagers>  
+		</http-conf:tlsClientParameters>  
+	</http-conf:conduit>  
+		  <sec:trustManagers>  
+			  <sec:keyStore type="JKS" password="changeit" file="C:\jdk1.5.0_06\jre\lib\security\cacerts" />  
+		  </sec:trustManagers>  
+		  <sec:keyManagers keyPassword="password">  
+			   <sec:keyStore type="JKS" password="changeit" file="C:\jdk1.5.0_06\jre\lib\security\cacerts" />  
+		  </sec:keyManagers>  
+		  <sec:cipherSuitesFilter>  
+			<sec:include>.*_EXPORT_.*</sec:include>  
+			<sec:include>.*_EXPORT1024_.*</sec:include>  
+			<sec:include>.*_WITH_DES_.*</sec:include>  
+			<sec:include>.*_WITH_NULL_.*</sec:include>  
+			<sec:exclude>.*_DH_anon_.*</sec:exclude>  
+		  </sec:cipherSuitesFilter>  
+-->

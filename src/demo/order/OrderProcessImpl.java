@@ -2,7 +2,7 @@ package demo.order;
 
 import javax.jws.WebService;
 
-@WebService
+@WebService(portName="OrderProcessSSLPort")
 public class OrderProcessImpl implements OrderProcess {
 
     public String processOrder(Order order) {
